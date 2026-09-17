@@ -1226,7 +1226,11 @@ function showPaymentStep(orderNumber, amount, subtotal){
     cartStep.style.display='none'; checkoutStep.style.display='none'; paymentStep.style.display='flex';
 }
 
-basketBtn.addEventListener('click', openDrawer);
+function toggleDrawer(){
+    if(basketDrawer.classList.contains('open')){ closeDrawer(); }
+    else { openDrawer(); }
+}
+basketBtn.addEventListener('click', toggleDrawer);
 drawerOverlay.addEventListener('click', closeDrawer);
 document.getElementById('drawerClose1').addEventListener('click', closeDrawer);
 document.getElementById('drawerClose2').addEventListener('click', closeDrawer);
