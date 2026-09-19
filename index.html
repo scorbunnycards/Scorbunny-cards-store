@@ -450,6 +450,51 @@ body {
 
 .badge { display:inline-block; padding:5px 14px; background: rgba(127,173,245,0.14); border: 1px solid rgba(127,173,245,0.4); border-radius:100px; font-size:0.68rem; letter-spacing:2.5px; text-transform:uppercase; color: var(--gold); margin-bottom:14px; }
 
+/* ═══════════════════ INFO / LEGAL PAGE ═══════════════════ */
+.info-subnav { display:flex; flex-wrap:wrap; gap:10px; margin: 4px 0 46px; }
+.info-subnav button {
+    padding: 10px 18px; border-radius:100px; border:1px solid var(--border); background: var(--surface);
+    color: var(--ink-soft); font-family:'Outfit', sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.3px;
+    cursor:pointer; transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease-out);
+}
+.info-subnav button:hover { transform: translateY(-2px); border-color: rgba(180,142,224,0.4); color: var(--ink); }
+.info-subnav button.active { background: var(--surface-strong); color: var(--ink); border-color: rgba(216,136,166,0.4); }
+
+.info-section { padding: 46px 0; border-top:1px solid var(--border); scroll-margin-top: calc(var(--nav-h) + 24px); max-width: 780px; }
+.info-section:first-of-type { border-top:none; padding-top:0; }
+.info-section h3 { font-family:'Fraunces', serif; font-weight:500; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--ink); letter-spacing:-0.3px; margin-bottom:8px; }
+.info-updated { font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; color: var(--ink-faint); margin-bottom:20px; }
+.info-prose p { color: var(--ink-soft); font-size:0.92rem; line-height:1.75; margin-bottom:14px; }
+.info-prose h4 { font-family:'Outfit', sans-serif; font-weight:700; font-size:0.92rem; color: var(--ink); margin: 22px 0 8px; }
+.info-prose ul { margin: 0 0 14px 20px; color: var(--ink-soft); font-size:0.92rem; line-height:1.75; }
+.info-prose li { margin-bottom:6px; }
+.info-prose a { color: var(--rose-deep); text-decoration:underline; text-underline-offset:3px; }
+.info-prose strong { color: var(--ink); }
+.info-note { margin-top:18px; padding: 14px 18px; background: var(--surface); border:1px solid var(--border); border-radius:14px; font-size:0.8rem; color: var(--ink-faint); line-height:1.6; }
+
+.info-contact-grid { display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; }
+.info-contact-item { background: var(--surface); border:1px solid var(--border); border-radius:16px; padding: 18px 22px; min-width:210px; flex:1; }
+.info-contact-item .ci-label { font-size:0.66rem; letter-spacing:2px; text-transform:uppercase; color: var(--rose-deep); margin-bottom:6px; }
+.info-contact-item .ci-value { font-family:'Fraunces', serif; font-weight:500; font-size:1.05rem; color: var(--ink); }
+.info-contact-item a { color: inherit; text-decoration:none; }
+.info-contact-item a:hover { color: var(--rose-deep); }
+
+/* ═══════════════════ GLOBAL SITE FOOTER ═══════════════════ */
+.global-footer { position:relative; z-index:10; border-top:1px solid var(--border); padding: 64px 6% 28px; }
+.global-footer-grid { display:grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; max-width:1200px; margin:0 auto; }
+.gf-brand { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.gf-brand img { width:38px; height:38px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(180,142,224,0.4); }
+.gf-brand span { font-family:'Fraunces', serif; font-weight:500; font-size:1.1rem; color: var(--ink); }
+.global-footer-col p { font-size:0.82rem; color: var(--ink-faint); line-height:1.65; max-width:270px; }
+.global-footer-col h4 { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color: var(--rose-deep); margin-bottom:16px; }
+.global-footer-col a.gf-link { display:block; font-size:0.85rem; color: var(--ink-soft); text-decoration:none; margin-bottom:12px; transition: color 0.25s; width:fit-content; }
+.global-footer-col a.gf-link:hover { color: var(--ink); }
+.global-footer-bottom { max-width:1200px; margin: 44px auto 0; padding-top:22px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:0.74rem; color: var(--ink-faint); }
+.global-footer-bottom a { color: var(--ink-faint); text-decoration:none; }
+.global-footer-bottom a:hover { color: var(--ink-soft); }
+@media (max-width: 860px) { .global-footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .global-footer-grid { grid-template-columns: 1fr; } }
+
 /* ═══════════════════ BASKET DRAWER ═══════════════════ */
 .drawer-overlay { position:fixed; inset:0; background: rgba(74,53,82,0.25); backdrop-filter: blur(4px); opacity:0; pointer-events:none; transition: opacity 0.4s ease; z-index: 9990; }
 .drawer-overlay.open { opacity:1; pointer-events:auto; }
@@ -525,6 +570,11 @@ body {
 }
 .field textarea { resize: vertical; min-height: 76px; }
 .field input:focus, .field textarea:focus { border-color: var(--lavender-deep); box-shadow: 0 0 0 4px rgba(180,142,224,0.14); }
+.ship-countries-note { font-size:0.76rem; color: var(--ink-faint); line-height:1.5; margin-top:-6px; padding: 10px 12px; background: var(--surface); border:1px solid var(--border); border-radius:10px; }
+.agree-row { display:flex; align-items:flex-start; gap:10px; cursor:pointer; padding-top:2px; }
+.agree-row input[type="checkbox"] { flex-shrink:0; width:18px; height:18px; margin-top:2px; accent-color: var(--rose-deep); cursor:pointer; }
+.agree-row span { font-size:0.8rem; color: var(--ink-soft); line-height:1.55; }
+.agree-row a { color: var(--rose-deep); text-decoration:underline; text-underline-offset:2px; }
 .back-link { background:none; border:none; color: var(--ink-soft); font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; margin-bottom:16px; }
 .back-link:hover { color: var(--ink); }
 
@@ -724,6 +774,146 @@ body {
     <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
+<!-- ████████████ INFO / LEGAL PAGE ████████████ -->
+<section class="page-wrapper" id="infoPage">
+    <div class="page-heading">
+        <div><div class="badge">Good To Know</div><h2>Store <em>Information</em></h2></div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="info-subnav" id="infoSubnav">
+        <button type="button" data-target="about-us">About Us</button>
+        <button type="button" data-target="contact">Contact</button>
+        <button type="button" data-target="shipping-delivery">Shipping &amp; Delivery</button>
+        <button type="button" data-target="returns-withdrawal">Returns / Withdrawal</button>
+        <button type="button" data-target="privacy-policy">Privacy Policy</button>
+        <button type="button" data-target="terms-conditions">Terms &amp; Conditions</button>
+    </div>
+
+    <!-- ABOUT US -->
+    <div class="info-section" id="about-us">
+        <h3>About Us</h3>
+        <div class="info-prose">
+            <p><strong>Scorbunny Cards</strong> started as a small, hands-on passion project: taking the Pokémon cards we love and turning them into full display pieces, one custom extension at a time. What began as a personal hobby has grown into a small independent shop serving collectors who want their favorite cards to feel like art, not just cardboard in a sleeve.</p>
+            <p>Every extension is individually designed around the card it's made for — matching colors, lighting, and mood so the printed background feels like a natural continuation of the artwork. Pieces are made to order in small batches, checked by hand, and packed carefully before they leave us.</p>
+            <p>We're a small operation, which means every order gets personal attention — but it also means production takes real time. Thank you for supporting an independent, collector-run shop.</p>
+            <div class="info-note">Scorbunny Cards is an independent, fan-run shop and is not affiliated with, endorsed by, or sponsored by Nintendo, Game Freak, Creatures Inc., or The Pokémon Company. Pokémon and all related names are trademarks of their respective owners. Our products are unofficial, made-to-order fan accessories intended for personal collector use.</div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="info-section" id="contact">
+        <h3>Contact</h3>
+        <div class="info-prose">
+            <p>Have a question about an order, a custom request, or anything else? We're happy to help — email is the fastest way to reach us.</p>
+            <div class="info-contact-grid">
+                <div class="info-contact-item">
+                    <div class="ci-label">Email</div>
+                    <div class="ci-value"><a href="mailto:scorbunnycards@gmail.com">scorbunnycards@gmail.com</a></div>
+                </div>
+                <div class="info-contact-item">
+                    <div class="ci-label">Instagram</div>
+                    <div class="ci-value"><a href="https://www.instagram.com/scorbunny_cards" target="_blank" rel="noopener">@scorbunny_cards</a></div>
+                </div>
+                <div class="info-contact-item">
+                    <div class="ci-label">Response Time</div>
+                    <div class="ci-value">Within 1–2 days</div>
+                </div>
+            </div>
+            <p style="margin-top:18px;">When reaching out about an existing order, please include your order number (found in your confirmation email) so we can find your details quickly.</p>
+        </div>
+    </div>
+
+    <!-- SHIPPING & DELIVERY -->
+    <div class="info-section" id="shipping-delivery">
+        <h3>Shipping &amp; Delivery</h3>
+        <div class="info-prose">
+            <p>Because every extension is made to order, please allow a short production window before your order ships. Once your piece is ready, it's carefully packaged to prevent damage in transit and shipped with a tracked delivery service.</p>
+            <h4>Production Time</h4>
+            <p>Most orders are produced and ready to ship within a few business days of payment being confirmed. Larger or more detailed pieces (such as multi-card A4 extensions) may take a little longer — if there's any delay we'll let you know by email.</p>
+            <h4>Shipping Time &amp; Cost</h4>
+            <p>A flat shipping fee is shown at checkout before you confirm your order. Delivery times vary depending on your location and the courier's own transit times, and a tracking number is provided once your order is on its way.</p>
+            <h4>Where We Ship</h4>
+            <p>At this time, we only ship to the following countries:</p>
+            <ul>
+                <li>Slovakia</li>
+                <li>Czechia (Czech Republic)</li>
+                <li>Romania</li>
+                <li>Hungary</li>
+            </ul>
+            <p>We're unable to accept or ship orders outside of these four countries at the moment. If your shipping address is outside this area, please don't place an order — we won't be able to fulfil it.</p>
+        </div>
+    </div>
+
+    <!-- RETURNS / WITHDRAWAL POLICY -->
+    <div class="info-section" id="returns-withdrawal">
+        <h3>Returns / Withdrawal Policy</h3>
+        <div class="info-updated">Please read before ordering</div>
+        <div class="info-prose">
+            <p>We want you to be happy with your extension. Because every piece is custom-made to your chosen card, frame color, case, and specifications, please read the following carefully before placing your order.</p>
+            <h4>Custom / Personalized Orders</h4>
+            <p>Under EU consumer protection law, the standard 14-day right of withdrawal does not apply to goods made to the consumer's specifications or clearly personalized (Directive 2011/83/EU, Art. 16(c)). As every extension we make is produced specifically for your chosen card and options, orders generally cannot be cancelled or returned simply for a change of mind once production has begun.</p>
+            <p>If you need to cancel or change an order, contact us as soon as possible — if production hasn't started yet, we'll do our best to accommodate you.</p>
+            <h4>Damaged, Defective, or Incorrect Items</h4>
+            <p>If your order arrives damaged, defective, or different from what you ordered, please contact us within 14 days of delivery at <a href="mailto:scorbunnycards@gmail.com">scorbunnycards@gmail.com</a> with your order number and clear photos of the issue. We'll arrange a replacement, repair, or refund as appropriate, free of charge.</p>
+            <h4>Lost in Transit</h4>
+            <p>If tracking shows your order as lost or significantly delayed beyond the expected delivery window, let us know and we'll investigate with the courier and find a fair resolution.</p>
+            <div class="info-note">This section is provided for general information and reflects our standard policy — it does not override any mandatory statutory rights you may have under the consumer protection laws of your country of residence.</div>
+        </div>
+    </div>
+
+    <!-- PRIVACY POLICY -->
+    <div class="info-section" id="privacy-policy">
+        <h3>Privacy Policy</h3>
+        <div class="info-updated">Last updated: September 2026</div>
+        <div class="info-prose">
+            <p>This Privacy Policy explains what personal information we collect when you use this website and place an order, and how we use it.</p>
+            <h4>Information We Collect</h4>
+            <ul>
+                <li>Contact and order details you provide at checkout: full name, email address, phone number, shipping address, and any notes you leave us.</li>
+                <li>Basic basket data (items and quantities) stored locally in your browser so your basket is remembered between visits.</li>
+                <li>Any information you send us directly by email, such as when contacting us with a question.</li>
+            </ul>
+            <h4>How We Use It</h4>
+            <ul>
+                <li>To process, produce, and ship your order.</li>
+                <li>To communicate with you about your order, including payment and delivery updates.</li>
+                <li>To respond to questions or requests you send us.</li>
+            </ul>
+            <p>We do not sell your personal information to third parties, and we do not use it for advertising or marketing purposes without your consent.</p>
+            <h4>Third-Party Services</h4>
+            <p>Order and checkout form submissions are securely processed through a third-party form delivery service, which transmits your order details to our email inbox. Payment is handled separately via direct bank transfer using the details we provide after your order is placed — we do not collect or store any card or banking credentials on this site.</p>
+            <h4>Data Retention</h4>
+            <p>We keep order information for as long as reasonably necessary to fulfil your order, handle any warranty or return requests, and meet our legal and accounting obligations.</p>
+            <h4>Your Rights</h4>
+            <p>Depending on where you live, you may have the right to access, correct, delete, or request a copy of the personal information we hold about you. To exercise any of these rights, contact us at <a href="mailto:scorbunnycards@gmail.com">scorbunnycards@gmail.com</a>.</p>
+            <h4>Cookies &amp; Local Storage</h4>
+            <p>This site uses your browser's local storage to remember the contents of your basket. This data stays on your own device and is not used for tracking or analytics.</p>
+        </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS -->
+    <div class="info-section" id="terms-conditions">
+        <h3>Terms &amp; Conditions</h3>
+        <div class="info-updated">Last updated: September 2026</div>
+        <div class="info-prose">
+            <p>By placing an order on this website, you agree to the following terms.</p>
+            <h4>Products</h4>
+            <p>All extensions are made to order based on the size, frame color, case type, and card you specify at checkout. Colors and finishes may vary slightly from what's shown on screen due to differences in display calibration and printing.</p>
+            <h4>Orders &amp; Payment</h4>
+            <p>Prices are displayed in Euros (€) and include the item cost; shipping is calculated and shown separately at checkout. Orders are currently paid by direct bank transfer (IBAN) using the reference number provided after checkout. Production begins once payment has been confirmed.</p>
+            <h4>Order Acceptance</h4>
+            <p>Submitting an order through this site is an offer to purchase, which we may confirm or, in rare cases, decline or adjust (for example, if a requested option is unavailable) — in which case we'll contact you before proceeding.</p>
+            <h4>Intellectual Property &amp; Trademark Disclaimer</h4>
+            <p>Scorbunny Cards is an independent, unofficial fan project and is not affiliated with, sponsored by, or endorsed by Nintendo, Game Freak, Creatures Inc., or The Pokémon Company. All Pokémon names, images, and related trademarks belong to their respective owners and are used here for descriptive, non-commercial fan purposes. We do not sell official Pokémon Trading Card Game products — we sell custom display accessories designed to complement cards you already own.</p>
+            <h4>Limitation of Liability</h4>
+            <p>We are not liable for indirect or consequential loss arising from the use of our products. Our liability for any order is limited to the amount paid for that order.</p>
+            <h4>Changes to These Terms</h4>
+            <p>We may update these Terms &amp; Conditions from time to time. The version posted on this page at the time of your order applies to that order.</p>
+        </div>
+    </div>
+</section>
+
 <!-- ████████████ LIGHTBOX (gallery photo viewer) ████████████ -->
 <div class="lightbox-overlay" id="lightboxOverlay">
     <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
@@ -753,7 +943,7 @@ body {
             <div class="subtotal-row shipping-row"><span>Shipping</span><span id="shippingValue">€4.00</span></div>
             <div class="subtotal-row discount-row" id="discountRow" style="display:none;"><span>Discount</span><span id="discountValue">−€0.00</span></div>
             <div class="subtotal-row total-row"><span>Total</span><span id="totalValue">€0.00</span></div>
-            <p class="subtotal-note">Flat-rate shipping of €4.00 applies to every order. Final price is confirmed by us before payment — especially for custom extensions.</p>
+            <p class="subtotal-note">Flat-rate shipping of €4.00 applies to every order. We currently ship to Slovakia, Czechia, Romania, and Hungary only. Final price is confirmed by us before payment — especially for custom extensions.</p>
             <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
         </div>
     </div>
@@ -768,7 +958,12 @@ body {
                 <div class="field"><label for="custEmail">Email</label><input type="email" id="custEmail" name="Email" required></div>
                 <div class="field"><label for="custPhone">Phone number</label><input type="tel" id="custPhone" name="Phone" required></div>
                 <div class="field"><label for="custAddress">Shipping address</label><textarea id="custAddress" name="Shipping Address" required placeholder="Street, city, postal code, country"></textarea></div>
+                <p class="ship-countries-note">We currently ship to <strong>Slovakia, Czechia, Romania, and Hungary</strong> only. Please make sure your address is within one of these countries.</p>
                 <div class="field"><label for="custNotes">Notes (optional)</label><textarea id="custNotes" name="Notes" placeholder="Anything else we should know?"></textarea></div>
+                <label class="agree-row" for="custAgree">
+                    <input type="checkbox" id="custAgree" name="Agreed to Terms" required>
+                    <span>I have read and agree to the <a href="#" id="agreeTermsLink">Terms &amp; Conditions</a> and store policies (Privacy, Shipping &amp; Delivery, Returns / Withdrawal).</span>
+                </label>
                 <button type="submit" class="btn btn-primary" id="placeOrderBtn">Place Order</button>
             </form>
         </div>
@@ -858,6 +1053,41 @@ body {
         </div>
     </div>
 </div>
+
+<!-- ████████████ GLOBAL SITE FOOTER ████████████ -->
+<footer class="global-footer">
+    <div class="global-footer-grid">
+        <div class="global-footer-col">
+            <div class="gf-brand">
+                <img src="Scorbunny cards logo.jpg" alt="Scorbunny Cards logo">
+                <span>Scorbunny cards</span>
+            </div>
+            <p>Custom Pokémon card extensions, crafted one card at a time. An independent, collector-run shop — not affiliated with Nintendo, Game Freak, or The Pokémon Company.</p>
+        </div>
+        <div class="global-footer-col">
+            <h4>Shop</h4>
+            <a href="#" class="gf-link" data-nav="home">Home</a>
+            <a href="#" class="gf-link" data-nav="ext">Extensions</a>
+            <a href="#" class="gf-link" data-nav="gallery">Gallery</a>
+        </div>
+        <div class="global-footer-col">
+            <h4>Company</h4>
+            <a href="#" class="gf-link" data-nav="info" data-target="about-us">About Us</a>
+            <a href="#" class="gf-link" data-nav="info" data-target="contact">Contact</a>
+        </div>
+        <div class="global-footer-col">
+            <h4>Policies</h4>
+            <a href="#" class="gf-link" data-nav="info" data-target="shipping-delivery">Shipping &amp; Delivery</a>
+            <a href="#" class="gf-link" data-nav="info" data-target="returns-withdrawal">Returns / Withdrawal</a>
+            <a href="#" class="gf-link" data-nav="info" data-target="privacy-policy">Privacy Policy</a>
+            <a href="#" class="gf-link" data-nav="info" data-target="terms-conditions">Terms &amp; Conditions</a>
+        </div>
+    </div>
+    <div class="global-footer-bottom">
+        <span>© 2026 Scorbunny Cards. All rights reserved.</span>
+        <span><a href="mailto:scorbunnycards@gmail.com">scorbunnycards@gmail.com</a></span>
+    </div>
+</footer>
 
 <!-- ████████████ SCRIPTS ████████████ -->
 <script>
@@ -979,6 +1209,7 @@ function hideLoader(){ setTimeout(()=>loader.classList.remove('active'), 380); }
 const homePage = document.getElementById('homePage');
 const extPage  = document.getElementById('extensionsPage');
 const galleryPage = document.getElementById('galleryPage');
+const infoPage = document.getElementById('infoPage');
 const navHomeLinks = [document.getElementById('navHome'), document.getElementById('navHome2')];
 const navExtLink = document.getElementById('navExtensions');
 const navGalleryLink = document.getElementById('navGallery');
@@ -1000,10 +1231,12 @@ function showPage(page){
     homePage.style.display = 'none';
     extPage.style.display = 'none'; extPage.classList.remove('visible');
     galleryPage.style.display = 'none'; galleryPage.classList.remove('visible');
+    infoPage.style.display = 'none'; infoPage.classList.remove('visible');
     setTimeout(()=>{
         if(page==='home'){ homePage.style.display='flex'; }
         else if(page==='ext'){ extPage.style.display='flex'; extPage.classList.add('visible'); buildGrid(); }
         else if(page==='gallery'){ galleryPage.style.display='flex'; galleryPage.classList.add('visible'); buildGallery(); }
+        else if(page==='info'){ infoPage.style.display='flex'; infoPage.classList.add('visible'); }
         setActiveNav(page);
         window.scrollTo({top:0, behavior:'instant'});
         hideLoader();
@@ -1013,6 +1246,33 @@ navHomeLinks.forEach(a=>a.addEventListener('click', e=>{ e.preventDefault(); sho
 navExtLink.addEventListener('click', e=>{ e.preventDefault(); showPage('ext'); });
 navGalleryLink.addEventListener('click', e=>{ e.preventDefault(); showPage('gallery'); });
 document.getElementById('heroShopBtn').addEventListener('click', e=>{ e.preventDefault(); showPage('ext'); });
+
+/* ─── INFO PAGE: sub-nav + deep links from footer ─── */
+function goToInfoSection(target){
+    showPage('info');
+    setTimeout(()=>{
+        const el = target ? document.getElementById(target) : null;
+        if(el){
+            el.scrollIntoView({behavior:'smooth', block:'start'});
+            document.querySelectorAll('.info-subnav button').forEach(b=>b.classList.toggle('active', b.dataset.target===target));
+        }
+    }, 480);
+}
+document.querySelectorAll('.info-subnav button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.info-subnav button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+});
+document.querySelectorAll('.global-footer .gf-link').forEach(link=>{
+    link.addEventListener('click', e=>{
+        e.preventDefault();
+        const nav = link.dataset.nav;
+        if(nav === 'info'){ goToInfoSection(link.dataset.target); }
+        else { showPage(nav); }
+    });
+});
 
 /* ─── Mobile hamburger menu ─── */
 const menuToggle = document.getElementById('menuToggle');
@@ -1372,6 +1632,12 @@ document.getElementById('drawerClose2').addEventListener('click', closeDrawer);
 document.getElementById('drawerClose3').addEventListener('click', closeDrawer);
 document.getElementById('checkoutBtn').addEventListener('click', showCheckoutStep);
 document.getElementById('backToCart').addEventListener('click', showCartStep);
+document.getElementById('agreeTermsLink').addEventListener('click', e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    closeDrawer();
+    goToInfoSection('terms-conditions');
+});
 
 /* ─── CHECKOUT SUBMIT → EMAIL ─── */
 const checkoutForm = document.getElementById('checkoutForm');
@@ -1396,6 +1662,7 @@ checkoutForm.addEventListener('submit', async (e)=>{
     fd.append('Phone', document.getElementById('custPhone').value);
     fd.append('Shipping Address', document.getElementById('custAddress').value);
     fd.append('Notes', document.getElementById('custNotes').value || '—');
+    fd.append('Agreed to Terms & Policies', document.getElementById('custAgree').checked ? 'Yes' : 'No');
     fd.append('Order Items', itemsSummary);
     fd.append('Order Subtotal', '€'+orderSubtotal.toFixed(2));
     fd.append('Shipping Fee', '€'+SHIPPING_COST.toFixed(2));
