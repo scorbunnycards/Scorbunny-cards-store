@@ -831,6 +831,8 @@ body {
             <p>Because every extension is made to order, please allow a short production window before your order ships. Once your piece is ready, it's carefully packaged to prevent damage in transit and shipped with a tracked delivery service.</p>
             <h4>Production Time</h4>
             <p>Most orders are produced and ready to ship within a few business days of payment being confirmed. Larger or more detailed pieces (such as multi-card A4 extensions) may take a little longer — if there's any delay we'll let you know by email.</p>
+            <h4>Preparation &amp; Dispatch Days</h4>
+            <p>Orders are prepared over the weekend and dispatched Monday through Friday. Orders placed later in the week may ship on the following business day — this is normal and doesn't mean anything has gone wrong with your order.</p>
             <h4>Shipping Time &amp; Cost</h4>
             <p>A flat shipping fee is shown at checkout before you confirm your order. Delivery times vary depending on your location and the courier's own transit times, and a tracking number is provided once your order is on its way.</p>
             <h4>Where We Ship</h4>
@@ -959,10 +961,15 @@ body {
                 <div class="field"><label for="custPhone">Phone number</label><input type="tel" id="custPhone" name="Phone" required></div>
                 <div class="field"><label for="custAddress">Shipping address</label><textarea id="custAddress" name="Shipping Address" required placeholder="Street, city, postal code, country"></textarea></div>
                 <p class="ship-countries-note">We currently ship to <strong>Slovakia, Czechia, Romania, and Hungary</strong> only. Please make sure your address is within one of these countries.</p>
+                <p class="ship-countries-note">Orders are prepared over the weekend and dispatched Monday–Friday. If you order later in the week, your order may ship on the next business day.</p>
                 <div class="field"><label for="custNotes">Notes (optional)</label><textarea id="custNotes" name="Notes" placeholder="Anything else we should know?"></textarea></div>
                 <label class="agree-row" for="custAgree">
                     <input type="checkbox" id="custAgree" name="Agreed to Terms" required>
                     <span>I have read and agree to the <a href="#" id="agreeTermsLink">Terms &amp; Conditions</a> and store policies (Privacy, Shipping &amp; Delivery, Returns / Withdrawal).</span>
+                </label>
+                <label class="agree-row" for="custAgreePay">
+                    <input type="checkbox" id="custAgreePay" name="Agreed to Pay" required>
+                    <span>I understand that, just like on any other store, placing this order means I'm required to pay for it (by IBAN bank transfer) for it to be processed.</span>
                 </label>
                 <button type="submit" class="btn btn-primary" id="placeOrderBtn">Place Order</button>
             </form>
@@ -1655,14 +1662,45 @@ checkoutForm.addEventListener('submit', async (e)=>{
         `${i.qty}x ${i.name}${i.price!=null ? ' — €'+(i.price*i.qty).toFixed(2) : ' — quote on request'}${i.note ? ' | Note: '+i.note : ''}`
     ).join('\n');
 
+    const custName = document.getElementById('custName').value;
+    const custEmail = document.getElementById('custEmail').value;
+
+    const autoMessage =
+`Hi ${custName},
+
+Thanks for your order at Scorbunny Cards! This confirms we've received it and it's now being processed.
+
+ORDER NUMBER: ${orderNumber}
+(use this as your payment reference)
+
+ORDER SUMMARY
+${itemsSummary}
+
+Subtotal: €${orderSubtotal.toFixed(2)}
+Shipping: €${SHIPPING_COST.toFixed(2)}
+TOTAL DUE: €${orderTotal.toFixed(2)}
+
+NEXT STEP — PAYMENT
+Your order will only move into production once payment is received. Please pay the total above by IBAN bank transfer:
+
+Account holder: ${IBAN_ACCOUNT_NAME}
+IBAN: ${IBAN_NUMBER}
+Reference: ${orderNumber}
+
+Once we've confirmed your payment, you'll get a follow-up email letting you know your order is being prepared.
+
+Thanks again!
+Scorbunny Cards`;
+
     const fd = new FormData();
     fd.append('Order Number', orderNumber);
-    fd.append('Name', document.getElementById('custName').value);
-    fd.append('Email', document.getElementById('custEmail').value);
+    fd.append('Name', custName);
+    fd.append('email', custEmail);
     fd.append('Phone', document.getElementById('custPhone').value);
     fd.append('Shipping Address', document.getElementById('custAddress').value);
     fd.append('Notes', document.getElementById('custNotes').value || '—');
     fd.append('Agreed to Terms & Policies', document.getElementById('custAgree').checked ? 'Yes' : 'No');
+    fd.append('Agreed to Pay', document.getElementById('custAgreePay').checked ? 'Yes' : 'No');
     fd.append('Order Items', itemsSummary);
     fd.append('Order Subtotal', '€'+orderSubtotal.toFixed(2));
     fd.append('Shipping Fee', '€'+SHIPPING_COST.toFixed(2));
@@ -1672,6 +1710,7 @@ checkoutForm.addEventListener('submit', async (e)=>{
     fd.append('_subject', `New order #${orderNumber} — Scorbunny Extensions`);
     fd.append('_template', 'table');
     fd.append('_captcha', 'false');
+    fd.append('_autoresponse', autoMessage);
 
     placeOrderBtn.disabled = true;
     placeOrderBtn.textContent = 'Sending...';
