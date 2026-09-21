@@ -605,7 +605,7 @@ body {
 .pay-note strong { color: var(--ink-soft); }
 
 /* ═══════════════════ CUSTOM MODAL ═══════════════════ */
-.modal-overlay { position:fixed; inset:0; background: rgba(74,53,82,0.3); backdrop-filter: blur(6px); opacity:0; pointer-events:none; transition: opacity 0.4s ease; z-index: 10050; display:flex; align-items:center; justify-content:center; padding: 20px; }
+.modal-overlay { position:fixed; inset:0; background: rgba(74,53,82,0.3); backdrop-filter: blur(6px); opacity:0; pointer-events:none; transition: opacity 0.4s ease; z-index: 9996; display:flex; align-items:center; justify-content:center; padding: 20px; }
 .modal-overlay.open { opacity:1; pointer-events:auto; }
 .modal {
     width:100%; max-width:460px; background: var(--cream); border-radius: 26px; padding: 32px;
@@ -1159,8 +1159,10 @@ const galleryItems = [
     { id:"g1", file:"t shirt.jpg", caption:"some fantastic T shirt" },
     { id:"g2", file:"charmander1.jpg", caption:"Gotta catch em all" },
     { id:"g3", file:"Scorbunny.jpg", caption:"this guy" },
-    { id:"g1", file:"waterfall.jpg", caption:"Enjoying outside" },
-    { id:"g1", file:"pokemon stairs.jpg", caption:"well look what I found" },
+    { id:"g4", file:"waterfall.jpg", caption:"Enjoying outside" },
+    { id:"g5", file:"pokemon stairs.jpg", caption:"well look what I found" },
+    { id:"g6", file:"stranka foto.jpg", caption:"Mini Extension's" },
+
 ];
 
 /* ⚠️ EDIT THIS: adjust labels/options for frame colors and card cases. */
@@ -1480,16 +1482,50 @@ const DISCOUNT_CODE_PATTERN = /^SB10EC(\d{1,3})$/i;
 const DISCOUNT_CODE_MAX = 200;
 const DISCOUNT_AMOUNT = 10;
 
-function isValidDiscountCode(code){
-    const match = DISCOUNT_CODE_PATTERN.exec(code.trim());
-    if(!match) return false;
+/* Returns the canonical form (e.g. "sb10ec007" -> "SB10EC7") or null if invalid.
+   Canonical form matters: it's the key used to mark a code as used, so
+   "SB10EC7" and "SB10EC007" must count as the same code. */
+function normalizeDiscountCode(code){
+    const match = DISCOUNT_CODE_PATTERN.exec((code||'').trim());
+    if(!match) return null;
     const n = parseInt(match[1], 10);
-    return n>=1 && n<=DISCOUNT_CODE_MAX;
+    return (n>=1 && n<=DISCOUNT_CODE_MAX) ? 'SB10EC'+n : null;
+}
+function isValidDiscountCode(code){ return normalizeDiscountCode(code) !== null; }
+
+/* ═══════════════════════════════════════════════════════
+   ⚠️ EDIT THIS: single-use codes are tracked in a free Firebase
+   Realtime Database so every visitor/device sees the same list of
+   used codes. Paste your database URL here (no trailing slash),
+   e.g. "https://scorbunny-cards-default-rtdb.europe-west1.firebasedatabase.app"
+═══════════════════════════════════════════════════════ */
+const FIREBASE_DB_URL = "https://codes-3f9ee-default-rtdb.europe-west1.firebasedatabase.app/";
+
+function codeUrl(code){ return `${FIREBASE_DB_URL}/usedCodes/${code}.json`; }
+
+/* true = already used, false = still available. Throws if it can't be checked. */
+async function isCodeUsed(code){
+    const res = await fetch(codeUrl(code), { cache:'no-store' });
+    if(!res.ok) throw new Error('lookup failed: '+res.status);
+    return (await res.json()) !== null;
+}
+
+/* Atomically marks the code as used. The database rules only allow the write
+   if the code has never been written before, so if two people try at the same
+   moment, exactly one wins. Returns 'claimed' or 'used'. Throws on other errors. */
+async function claimDiscountCode(code, orderNumber){
+    const res = await fetch(codeUrl(code), { method:'PUT', body: JSON.stringify(orderNumber) });
+    if(res.ok) return 'claimed';
+    if(res.status===401 || res.status===403){
+        // rejected by the rules: confirm it's because the code is taken
+        if(await isCodeUsed(code)) return 'used';
+    }
+    throw new Error('claim failed: '+res.status);
 }
 
 let appliedDiscountCode = null;
 try { appliedDiscountCode = localStorage.getItem('sb_discount') || null; } catch(e){ appliedDiscountCode = null; }
-if(appliedDiscountCode && !isValidDiscountCode(appliedDiscountCode)) appliedDiscountCode = null;
+appliedDiscountCode = normalizeDiscountCode(appliedDiscountCode);
 
 function discountAmount(){ return (appliedDiscountCode && basket.length>0) ? DISCOUNT_AMOUNT : 0; }
 
@@ -1581,19 +1617,36 @@ function updateDiscountUI(){
     }
 }
 
-function applyDiscountCode(){
+async function applyDiscountCode(){
     const input = document.getElementById('discountInput');
+    const applyBtn = document.getElementById('discountApplyBtn');
     const msg = document.getElementById('discountMsg');
-    const code = input.value.trim().toUpperCase();
-    if(!code){
+    if(!input.value.trim()){
         msg.textContent = 'Enter a code.';
         msg.className = 'discount-msg error';
         return;
     }
-    if(!isValidDiscountCode(code)){
+    const code = normalizeDiscountCode(input.value);
+    if(!code){
         msg.textContent = "That code isn't valid.";
         msg.className = 'discount-msg error';
         return;
+    }
+    applyBtn.disabled = true;
+    msg.textContent = 'Checking code…';
+    msg.className = 'discount-msg';
+    try {
+        if(await isCodeUsed(code)){
+            msg.textContent = 'That code has already been used.';
+            msg.className = 'discount-msg error';
+            return;
+        }
+    } catch(err){
+        msg.textContent = "Couldn't check the code right now — please try again.";
+        msg.className = 'discount-msg error';
+        return;
+    } finally {
+        applyBtn.disabled = false;
     }
     appliedDiscountCode = code;
     try { localStorage.setItem('sb_discount', appliedDiscountCode); } catch(e){}
@@ -1673,6 +1726,9 @@ checkoutForm.addEventListener('submit', async (e)=>{
     const orderNumber = generateOrderNumber();
     const orderSubtotal = basketSubtotal();
     const orderTotal = basketTotal();
+    const orderDiscount = discountAmount();
+    const orderDiscountCode = orderDiscount>0 ? appliedDiscountCode : null;
+    const discountLine = orderDiscountCode ? `Discount (${orderDiscountCode}): −€${orderDiscount.toFixed(2)}\n` : '';
 
     const itemsSummary = basket.map(i=>
         `${i.qty}x ${i.name}${i.price!=null ? ' — €'+(i.price*i.qty).toFixed(2) : ' — quote on request'}${i.note ? ' | Note: '+i.note : ''}`
@@ -1694,7 +1750,7 @@ ${itemsSummary}
 
 Subtotal: €${orderSubtotal.toFixed(2)}
 Shipping: €${SHIPPING_COST.toFixed(2)}
-TOTAL DUE: €${orderTotal.toFixed(2)}
+${discountLine}TOTAL DUE: €${orderTotal.toFixed(2)}
 
 NEXT STEP — PAYMENT
 Your order will only move into production once payment is received. Please pay the total above by IBAN bank transfer:
@@ -1727,7 +1783,7 @@ ${itemsSummary}
 
 Subtotal: €${orderSubtotal.toFixed(2)}
 Shipping: €${SHIPPING_COST.toFixed(2)}
-TOTAL: €${orderTotal.toFixed(2)}
+${discountLine}TOTAL: €${orderTotal.toFixed(2)}
 
 Payment Method: IBAN Bank Transfer
 Payment Reference To Watch For: ${orderNumber}
@@ -1737,6 +1793,25 @@ Payment Reference To Watch For: ${orderNumber}
     placeOrderBtn.disabled = true;
     placeOrderBtn.textContent = 'Sending...';
 
+    // Reserve the discount code BEFORE sending anything. The database only
+    // lets one order claim a given code, so it can never be used twice.
+    if(orderDiscountCode){
+        try{
+            if(await claimDiscountCode(orderDiscountCode, orderNumber) === 'used'){
+                removeDiscountCode();
+                alert(`Sorry — the code ${orderDiscountCode} has just been used, so it was removed from your basket. Please review your total and place the order again.`);
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.textContent = 'Place Order';
+                return;
+            }
+        } catch(err){
+            alert("We couldn't verify your discount code right now. Please try again in a moment.");
+            placeOrderBtn.disabled = false;
+            placeOrderBtn.textContent = 'Place Order';
+            return;
+        }
+    }
+
     try{
         // send the customer's confirmation + the owner's notification as two
         // separate real emails — this replaces FormSubmit, which was silently
@@ -1744,12 +1819,13 @@ Payment Reference To Watch For: ${orderNumber}
         await sendMail(custEmail, `Order #${orderNumber} confirmed — payment needed`, autoMessage);
         await sendMail(ORDER_EMAIL, `New order #${orderNumber} — Scorbunny Extensions`, ownerMessage);
 
-        showPaymentStep(orderNumber, orderTotal, orderSubtotal);
+        showPaymentStep(orderNumber, orderTotal, orderSubtotal, orderDiscount);
         basket = [];
         saveBasket();
+        if(orderDiscountCode) removeDiscountCode();
         checkoutForm.reset();
     } catch(err){
-        alert("We couldn't send your order automatically. Please email us directly and we'll take care of it — sorry about that!");
+        alert("We couldn't send your order automatically. Please email us directly and we'll take care of it — sorry about that!" + (orderDiscountCode ? ` Your code ${orderDiscountCode} has been reserved for this order, so please mention it in your email.` : ''));
     } finally {
         placeOrderBtn.disabled = false;
         placeOrderBtn.textContent = 'Place Order';
