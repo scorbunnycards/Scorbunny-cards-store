@@ -6,6 +6,7 @@
 <title>Scorbunny cards | Premium Pokémon Card Art</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 :root {
     --cream: #131127;
@@ -1100,12 +1101,27 @@ body {
 <script>
 
 /* ═══════════════════════════════════════════════════════
-   ⚠️ EDIT THIS: your email for order notifications.
-   FormSubmit needs no signup — but the FIRST order sent to
-   a new address triggers a one-time confirmation email from
-   FormSubmit that you must click before real orders arrive.
+   ⚠️ EDIT THIS: your email for order notifications — every
+   new order sends a detailed notification here, in addition
+   to the confirmation email the customer gets.
 ═══════════════════════════════════════════════════════ */
 const ORDER_EMAIL = "scorbunnycards@gmail.com";
+
+/* EmailJS — same account/template as the admin page. If you ever change
+   these in admin.html, update them here too so both stay in sync. */
+const EMAILJS_PUBLIC_KEY  = "laDCIJJMVDDHJxJsz";
+const EMAILJS_SERVICE_ID  = "service_7a2n73j";
+const EMAILJS_TEMPLATE_ID = "template_4n5dg0y";
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+async function sendMail(to, subject, body){
+    return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: to,
+        subject: subject,
+        message: body,
+        cc_email: ''
+    });
+}
 
 /* ═══════════════════════════════════════════════════════
    ⚠️ EDIT THIS: the IBAN payment details shown to the
@@ -1692,32 +1708,42 @@ Once we've confirmed your payment, you'll get a follow-up email letting you know
 Thanks again!
 Scorbunny Cards`;
 
-    const fd = new FormData();
-    fd.append('Order Number', orderNumber);
-    fd.append('Name', custName);
-    fd.append('email', custEmail);
-    fd.append('Phone', document.getElementById('custPhone').value);
-    fd.append('Shipping Address', document.getElementById('custAddress').value);
-    fd.append('Notes', document.getElementById('custNotes').value || '—');
-    fd.append('Agreed to Terms & Policies', document.getElementById('custAgree').checked ? 'Yes' : 'No');
-    fd.append('Agreed to Pay', document.getElementById('custAgreePay').checked ? 'Yes' : 'No');
-    fd.append('Order Items', itemsSummary);
-    fd.append('Order Subtotal', '€'+orderSubtotal.toFixed(2));
-    fd.append('Shipping Fee', '€'+SHIPPING_COST.toFixed(2));
-    fd.append('Order Total', '€'+orderTotal.toFixed(2));
-    fd.append('Payment Method', 'IBAN Bank Transfer');
-    fd.append('Payment Reference To Watch For', orderNumber);
-    fd.append('_subject', `New order #${orderNumber} — Scorbunny Extensions`);
-    fd.append('_template', 'table');
-    fd.append('_captcha', 'false');
-    fd.append('_autoresponse', autoMessage);
+    const ownerMessage =
+`New order received!
+
+ORDER NUMBER: ${orderNumber}
+
+CUSTOMER
+Name: ${custName}
+Email: ${custEmail}
+Phone: ${document.getElementById('custPhone').value}
+Shipping Address: ${document.getElementById('custAddress').value}
+Notes: ${document.getElementById('custNotes').value || '—'}
+Agreed to Terms & Policies: ${document.getElementById('custAgree').checked ? 'Yes' : 'No'}
+Agreed to Pay: ${document.getElementById('custAgreePay').checked ? 'Yes' : 'No'}
+
+ORDER ITEMS
+${itemsSummary}
+
+Subtotal: €${orderSubtotal.toFixed(2)}
+Shipping: €${SHIPPING_COST.toFixed(2)}
+TOTAL: €${orderTotal.toFixed(2)}
+
+Payment Method: IBAN Bank Transfer
+Payment Reference To Watch For: ${orderNumber}
+
+— Add this order to the admin page once you see it. —`;
 
     placeOrderBtn.disabled = true;
     placeOrderBtn.textContent = 'Sending...';
 
     try{
-        const res = await fetch(`https://formsubmit.co/ajax/${ORDER_EMAIL}`, { method:'POST', body: fd });
-        if(!res.ok) throw new Error('Request failed');
+        // send the customer's confirmation + the owner's notification as two
+        // separate real emails — this replaces FormSubmit, which was silently
+        // failing to email the customer whenever its CAPTCHA was disabled.
+        await sendMail(custEmail, `Order #${orderNumber} confirmed — payment needed`, autoMessage);
+        await sendMail(ORDER_EMAIL, `New order #${orderNumber} — Scorbunny Extensions`, ownerMessage);
+
         showPaymentStep(orderNumber, orderTotal, orderSubtotal);
         basket = [];
         saveBasket();
