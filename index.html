@@ -1508,8 +1508,7 @@ function isValidDiscountCode(code){ return normalizeDiscountCode(code) !== null;
    used codes. Paste your database URL here (no trailing slash),
    e.g. "https://scorbunny-cards-default-rtdb.europe-west1.firebasedatabase.app"
 ═══════════════════════════════════════════════════════ */
-const FIREBASE_DB_URL = "
-https:"//codes-3f9ee-default-rtdb.europe-west1.firebasedatabase.app";
+const FIREBASE_DB_URL = "https://codes-3f9ee-default-rtdb.europe-west1.firebasedatabase.app";
 
 function codeUrl(code){ return `${FIREBASE_DB_URL}/usedCodes/${code}.json`; }
 
