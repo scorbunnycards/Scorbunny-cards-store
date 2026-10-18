@@ -1485,7 +1485,6 @@ const DISCOUNT_AMOUNT = 10;
 /* Reusable promo codes (NOT single-use): { CODE: euros off }.
    To retire one, just delete its line here and re-upload the file. */
 const REUSABLE_CODES = {
-    'SBCARDS5': 5
 };
 function isReusableCode(code){ return Object.prototype.hasOwnProperty.call(REUSABLE_CODES, code); }
 function codeValue(code){ return isReusableCode(code) ? REUSABLE_CODES[code] : DISCOUNT_AMOUNT; }
@@ -1509,7 +1508,8 @@ function isValidDiscountCode(code){ return normalizeDiscountCode(code) !== null;
    used codes. Paste your database URL here (no trailing slash),
    e.g. "https://scorbunny-cards-default-rtdb.europe-west1.firebasedatabase.app"
 ═══════════════════════════════════════════════════════ */
-const FIREBASE_DB_URL = "https://YOUR-PROJECT-default-rtdb.firebaseio.com";
+const FIREBASE_DB_URL = "
+https:"//codes-3f9ee-default-rtdb.europe-west1.firebasedatabase.app";
 
 function codeUrl(code){ return `${FIREBASE_DB_URL}/usedCodes/${code}.json`; }
 
