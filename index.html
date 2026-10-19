@@ -385,6 +385,7 @@ body {
 @media (max-width: 620px) {
     .modal-overlay { padding: 0; align-items: flex-end; }
     .product-modal {
+        position: relative;
         max-width: 100%; width: 100%; padding: 0; border-radius: 22px 22px 0 0;
         overflow: hidden; max-height: 92vh; max-height: 92dvh;
     }
@@ -1144,10 +1145,10 @@ const SHIPPING_COST = 3.60;
    carousel with dots, e.g.:
    images: ["15x20.jpg", "15x20-angle.jpg", "15x20-lifestyle.jpg"] */
 const extensionItems = [
-    { id:"ext-15x20", name:"15×20 Extension", images:["15x20.jpg", "15x20_1.jpg", "15x20_2.jpg", "15x20_3.jpg"], price: 25, desc:"A compact, elegant extension — perfect for a single card display on a shelf or desk." },
-    { id:"ext-20x20", name:"20×20 Extension", images:["20x20.jpg", "20x20_2.jpg"], price: 30, desc:"A square format extension for a bold, symmetric, gallery-style presentation." },
-    { id:"ext-10x15", name:"10×15 Extension", images:["10x15.jpg", "10x15_2.jpg", "10x15_3.jpg"], price: 15,  desc:"Our smallest size — sleek and minimal, ideal for a subtle everyday display." },
-    { id:"ext-a4",    name:"A4 Extension",    images:["A4.jpg"],    price: 40, desc:"Our largest format — a true statement piece for your favorite card." },
+    { id:"ext-15x20", name:"15×20 Extension", images:["15x20.jpg", "15x20_1.jpg", "15x20_2.jpg", "15x20_3.jpg"], price: 25, desc:"A compact, elegant extension — perfect for a single card display on a shelf or desk.", frameColors:["black","white"] },
+    { id:"ext-20x20", name:"20×20 Extension", images:["20x20.jpg", "20x20_2.jpg"], price: 30, desc:"A square format extension for a bold, symmetric, gallery-style presentation.", frameColors:["black"] },
+    { id:"ext-10x15", name:"10×15 Extension", images:["10x15.jpg", "10x15_2.jpg", "10x15_3.jpg"], price: 15,  desc:"Our smallest size — sleek and minimal, ideal for a subtle everyday display.", frameColors:["black","white","wood"] },
+    { id:"ext-a4",    name:"A4 Extension",    images:["A4.jpg"],    price: 40, desc:"Our largest format — a true statement piece for your favorite card.", frameColors:["black"] },
 ];
 
 /* ─── GALLERY DATA ───
@@ -1165,8 +1166,13 @@ const galleryItems = [
 
 ];
 
-/* ⚠️ EDIT THIS: adjust labels/options for frame colors and card cases. */
+/* ⚠️ EDIT THIS: master list of all possible frame colors. Which of these are
+   actually offered for each extension is set per-item above via
+   `frameColors: [...]` (an array of these ids). */
 const FRAME_COLORS = [ { id:"black", label:"Black" }, { id:"white", label:"White" }, { id:"wood", label:"Wood" } ];
+function frameColorsFor(item){
+    return FRAME_COLORS.filter(f => item.frameColors.includes(f.id));
+}
 const CASE_TYPES = [ { id:"big-magnetic", label:"Big Magnetic" }, { id:"small-minimalist", label:"Small Minimalist" } ];
 
 /* ⚠️ Card-count option — ONLY shown for the A4 Extension (id: "ext-a4"). Sets the price. */
@@ -1925,13 +1931,14 @@ function buildProductCarousel(item){
 
 function openProductModal(item){
     currentProduct = item;
-    selectedFrame = FRAME_COLORS[0].id;
+    const availableFrames = frameColorsFor(item);
+    selectedFrame = availableFrames[0].id;
     selectedCase = CASE_TYPES[0].id;
     selectedCardCount = CARD_COUNTS[0].id;
     buildProductCarousel(item);
     document.getElementById('productName').textContent = item.name;
     document.getElementById('productDesc').textContent = item.desc || '';
-    renderPills('frameColorPills', FRAME_COLORS, selectedFrame, id=>{ selectedFrame=id; });
+    renderPills('frameColorPills', availableFrames, selectedFrame, id=>{ selectedFrame=id; });
     renderPills('caseTypePills', CASE_TYPES, selectedCase, id=>{ selectedCase=id; });
     const cardCountField = document.getElementById('cardCountField');
     if(item.id === 'ext-a4'){
