@@ -6,8 +6,8 @@
 <title>Scorbunny cards | Premium Pokémon Card Art</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Bodoni+Moda:opsz,wght@6..96,500&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#f3ebe0">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Bodoni+Moda:opsz,wght@6..96,500..800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#f3ebe0" id="themeColorMeta">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 :root{
@@ -19,7 +19,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-body{background:radial-gradient(1100px 520px at 8% -6%,#fff9ef,transparent 62%),var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:hidden;padding-top:var(--nav-h);opacity:0;animation:pageIn .8s var(--ease) forwards}
+body{background:transparent;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:hidden;padding-top:var(--nav-h);opacity:0;animation:pageIn .8s var(--ease) forwards}
 @keyframes pageIn{to{opacity:1}}
 img{max-width:100%}
 :focus-visible{outline:2px solid var(--teal);outline-offset:2px}
@@ -27,7 +27,7 @@ button{font-family:inherit}
 .ambient,#motes{display:none}
 
 /* NAV */
-.navbar{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);padding:0 max(5%,16px);display:flex;justify-content:space-between;align-items:center;z-index:9999;background:rgba(243,235,224,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
+.navbar{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);padding:0 max(5%,16px);display:flex;justify-content:space-between;align-items:center;z-index:9999;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
 .nav-left{display:flex;align-items:center;gap:12px;text-decoration:none}
 .nav-logo{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:var(--white)}
 .nav-title{font-family:var(--sans);font-weight:700;font-stretch:80%;font-size:1.2rem;letter-spacing:.02em;color:var(--ink)}
@@ -65,13 +65,13 @@ button{font-family:inherit}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* HERO */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(40px,7vw,96px);flex-grow:1;padding-bottom:88px;max-width:1180px;width:100%;margin:0 auto}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:clamp(40px,7vw,96px);flex-grow:1;padding-bottom:88px;max-width:1280px;width:100%;margin:0 auto}
 .hero-label{font-size:.95rem;font-weight:600;color:var(--peri);margin-bottom:16px;opacity:0;animation:fadeUp .7s var(--ease) .2s forwards}
-.hero-title{font-family:var(--sans);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:clamp(2.7rem,8vw,5rem);line-height:.92;letter-spacing:-.005em;color:var(--ink);opacity:0;animation:fadeUp .8s var(--ease) .35s forwards}
+.hero-title{font-family:var(--sans);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,5.4vw,3.9rem);line-height:.92;letter-spacing:-.005em;color:var(--ink);opacity:0;animation:fadeUp .8s var(--ease) .35s forwards}
 .hero-title span{display:block}
 .hero-title .ht-b{display:flex;align-items:flex-end;gap:.28em;margin:.12em 0 .1em}
 .hero-title .ht-into{font-stretch:125%;font-size:.42em;letter-spacing:.42em;padding-bottom:.35em}
-.hero-title em{font-family:var(--serif);font-style:normal;font-weight:500;font-stretch:100%;font-size:2.15em;line-height:.74;letter-spacing:0;background:linear-gradient(180deg,var(--ink) 0 54%,var(--teal) 54% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.hero-title em{font-family:var(--serif);font-style:normal;font-weight:700;font-stretch:100%;font-variation-settings:"opsz" 14;font-size:2.15em;line-height:.74;letter-spacing:0;background:linear-gradient(180deg,var(--ink) 0 54%,var(--teal) 54% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .hero-desc{font-size:1.05rem;color:var(--ink-soft);line-height:1.65;max-width:46ch;margin-top:26px;opacity:0;animation:fadeUp .7s var(--ease) .55s forwards}
 .stats-row{display:flex;gap:36px;margin-top:30px;padding-top:24px;border-top:1px solid var(--line);max-width:380px;opacity:0;animation:fadeUp .7s var(--ease) .7s forwards}
 .stat{display:flex;flex-direction:column}
@@ -228,13 +228,13 @@ button{font-family:inherit}
 .info-contact-item a:hover{color:var(--teal)}
 
 /* GLOBAL FOOTER */
-.global-footer{position:relative;z-index:10;background:var(--ink);color:rgba(243,235,224,.72);padding:60px max(5%,16px) 24px}
+.global-footer{position:relative;z-index:10;background:var(--footer-bg);color:rgba(243,235,224,.72);padding:60px max(5%,16px) 24px}
 .global-footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;max-width:1180px;margin:0 auto}
 .gf-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .gf-brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
-.gf-brand span{font-weight:700;font-stretch:80%;font-size:1.15rem;color:var(--bg)}
+.gf-brand span{font-weight:700;font-stretch:80%;font-size:1.15rem;color:#f3ebe0}
 .global-footer-col p{font-size:.9rem;line-height:1.65;max-width:300px}
-.global-footer-col h4{font-size:.9rem;font-weight:700;color:var(--bg);margin-bottom:14px}
+.global-footer-col h4{font-size:.9rem;font-weight:700;color:#f3ebe0;margin-bottom:14px}
 .global-footer-col a.gf-link{display:block;font-size:.92rem;color:rgba(243,235,224,.72);text-decoration:none;padding:5px 0;width:fit-content;transition:color .2s}
 .global-footer-col a.gf-link:hover{color:#fff}
 .global-footer-bottom{max-width:1180px;margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(243,235,224,.16);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.85rem}
@@ -377,12 +377,77 @@ button{font-family:inherit}
 .particle{position:fixed;pointer-events:none;width:6px;height:6px;border-radius:50%;background:var(--coral);animation:particlePop .6s var(--ease) forwards;z-index:99999}
 @keyframes particlePop{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* ===== DAY / NIGHT THEME (switches on scroll) ===== */
+@property --bg{syntax:'<color>';inherits:true;initial-value:#f3ebe0}
+@property --raised{syntax:'<color>';inherits:true;initial-value:#f9f4ec}
+@property --white{syntax:'<color>';inherits:true;initial-value:#fffdf9}
+@property --ink{syntax:'<color>';inherits:true;initial-value:#161a2e}
+@property --ink-soft{syntax:'<color>';inherits:true;initial-value:#161a2e}
+@property --ink-faint{syntax:'<color>';inherits:true;initial-value:#161a2e}
+@property --line{syntax:'<color>';inherits:true;initial-value:#161a2e}
+@property --teal{syntax:'<color>';inherits:true;initial-value:#0a7377}
+@property --peri{syntax:'<color>';inherits:true;initial-value:#4f54a8}
+@property --nav-bg{syntax:'<color>';inherits:true;initial-value:#f3ebe0}
+@property --panel{syntax:'<color>';inherits:true;initial-value:#f3ebe0}
+@property --footer-bg{syntax:'<color>';inherits:true;initial-value:#161a2e}
+html{background:#f3ebe0}
+body{--nav-bg:rgba(243,235,224,.88);--panel:rgba(243,235,224,.93);--footer-bg:#161a2e;
+ transition:--bg .7s,--raised .7s,--white .7s,--ink .7s,--ink-soft .7s,--ink-faint .7s,--line .7s,--teal .7s,--peri .7s,--nav-bg .7s,--panel .7s,--footer-bg .7s}
+body.night{--bg:#0d1822;--raised:#13222e;--white:rgba(19,34,46,.86);--ink:#f3ebe0;--ink-soft:rgba(243,235,224,.8);--ink-faint:rgba(243,235,224,.64);
+ --line:rgba(243,235,224,.17);--teal:#6fd0d0;--peri:#aeb2f4;--nav-bg:rgba(9,19,29,.86);--panel:rgba(9,19,29,.7);--footer-bg:rgba(6,12,18,.94);--ok:#6fdc9f;--err:#ff9484}
+
+/* fixed landscape behind everything: it never scrolls, the content moves over it */
+.landscape{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:0;overflow:hidden;pointer-events:none}
+.ls{position:absolute;inset:0;transition:opacity .9s ease}
+.ls-day{background:radial-gradient(900px 480px at 10% 0,#fffaf1,transparent 65%),linear-gradient(180deg,#f7efe3,#efe3d3)}
+.ls-night{opacity:0;background:linear-gradient(180deg,#09131d 0%,#10222e 55%,#173540 100%)}
+body.night .ls-night{opacity:1}
+.ls svg.mt{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:max(100%,1100px);height:auto;display:block}
+.ls svg.sky{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:700px){.ls svg.mt{width:max(100%,820px)}}
+
+/* keep text readable over the artwork */
+.stats-row{display:inline-flex;max-width:none;padding:16px 24px;border:1px solid var(--line);border-radius:12px;background:var(--raised)}
+body.inner .landscape{display:none}
+body.inner{background:radial-gradient(1100px 520px at 8% -6%,#fff9ef,transparent 62%),var(--bg)}
+body.night .card-3d img.card-img{box-shadow:0 22px 44px rgba(0,0,0,.55)}
+body.night .slot:hover{box-shadow:0 14px 30px -16px rgba(0,0,0,.7)}
 </style>
 </head>
 <body>
 
 <!-- LOADER -->
 <div id="loader"><div class="loader-ring"></div></div>
+
+<!-- BACKGROUND LANDSCAPE: fixed, day by default, night once you scroll -->
+<div class="landscape" aria-hidden="true">
+<div class="ls ls-day"><svg class="mt" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path fill="#3b7380" d="M1000 1080V760L1260 520 1400 430 1520 330 1640 220 1760 110 1830 130 1880 215 1920 200V1080Z"/>
+<path fill="#7bb4be" d="M1760 110 1830 130 1880 215 1850 205 1800 142 1715 262 1676 250Z"/>
+<path fill="#5f9ca8" d="M1520 330 1640 220 1676 250 1600 300 1560 345Z"/>
+<path fill="#2f6470" d="M0 1080V930L375 765 435 858 710 765 775 825 830 700 1075 745 1500 862 1920 780V1080Z"/>
+<path fill="#7bb4be" d="M0 930 375 765 405 810 432 852 0 1030Z"/>
+<path fill="#5f9ca8" d="M435 858 710 765 700 790 470 868Z"/>
+<path fill="#7bb4be" d="M775 825 830 700 850 740 800 838Z"/>
+<path fill="#7bb4be" d="M380 1080 660 965 722 1080Z"/>
+<path fill="#7bb4be" d="M1165 1080 1400 862 1448 922 1360 1080Z"/>
+<path fill="#5f9ca8" d="M1500 862 1920 780V830L1560 900Z"/>
+</svg></div>
+<div class="ls ls-night"><svg class="sky" viewBox="0 0 1920 640" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="683" cy="174" r="1.6" fill="#f3ebe0" opacity="0.4"/><circle cx="168" cy="116" r="1.2" fill="#f3ebe0" opacity="0.4"/><circle cx="1883" cy="539" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="196" cy="464" r="1.6" fill="#f3ebe0" opacity="0.4"/><circle cx="512" cy="112" r="2" fill="#f3ebe0" opacity="0.9"/><circle cx="141" cy="146" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="1201" cy="426" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="115" cy="156" r="1.2" fill="#f3ebe0" opacity="0.9"/><circle cx="315" cy="140" r="2" fill="#f3ebe0" opacity="0.7"/><circle cx="1167" cy="205" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="782" cy="119" r="2" fill="#f3ebe0" opacity="0.4"/><circle cx="1175" cy="81" r="2" fill="#f3ebe0" opacity="0.55"/><circle cx="1036" cy="457" r="1.2" fill="#f3ebe0" opacity="0.9"/><circle cx="1219" cy="484" r="1.2" fill="#f3ebe0" opacity="0.7"/><circle cx="528" cy="204" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="1196" cy="327" r="2" fill="#f3ebe0" opacity="0.9"/><circle cx="1812" cy="371" r="1.6" fill="#f3ebe0" opacity="0.7"/><circle cx="1267" cy="94" r="0.8" fill="#f3ebe0" opacity="0.9"/><circle cx="357" cy="370" r="1" fill="#f3ebe0" opacity="0.9"/><circle cx="883" cy="60" r="0.8" fill="#f3ebe0" opacity="0.7"/><circle cx="716" cy="378" r="2" fill="#f3ebe0" opacity="0.9"/><circle cx="1207" cy="487" r="0.8" fill="#f3ebe0" opacity="0.4"/><circle cx="572" cy="505" r="0.8" fill="#f3ebe0" opacity="0.4"/><circle cx="1517" cy="337" r="2" fill="#f3ebe0" opacity="0.9"/><circle cx="602" cy="415" r="1.2" fill="#f3ebe0" opacity="0.4"/><circle cx="965" cy="383" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="1031" cy="80" r="1" fill="#f3ebe0" opacity="0.7"/><circle cx="284" cy="273" r="1.6" fill="#f3ebe0" opacity="0.9"/><circle cx="1897" cy="528" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="939" cy="431" r="2" fill="#f3ebe0" opacity="0.7"/><circle cx="1829" cy="160" r="1.6" fill="#f3ebe0" opacity="0.7"/><circle cx="1466" cy="445" r="1.2" fill="#f3ebe0" opacity="0.9"/><circle cx="492" cy="174" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="329" cy="257" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="1013" cy="206" r="1.2" fill="#f3ebe0" opacity="0.7"/><circle cx="28" cy="169" r="1.6" fill="#f3ebe0" opacity="0.7"/><circle cx="1268" cy="346" r="1" fill="#f3ebe0" opacity="0.4"/><circle cx="955" cy="421" r="1.6" fill="#f3ebe0" opacity="0.9"/><circle cx="827" cy="126" r="1.6" fill="#f3ebe0" opacity="0.9"/><circle cx="147" cy="215" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="922" cy="186" r="0.8" fill="#f3ebe0" opacity="0.7"/><circle cx="1250" cy="73" r="0.8" fill="#f3ebe0" opacity="0.4"/><circle cx="1180" cy="174" r="2" fill="#f3ebe0" opacity="0.4"/><circle cx="764" cy="46" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="1277" cy="405" r="1" fill="#f3ebe0" opacity="0.7"/><circle cx="731" cy="392" r="1.6" fill="#f3ebe0" opacity="0.4"/><circle cx="256" cy="519" r="1.6" fill="#f3ebe0" opacity="0.9"/><circle cx="1010" cy="339" r="0.8" fill="#f3ebe0" opacity="0.55"/><circle cx="1010" cy="150" r="96" fill="#f5d9a6" opacity=".07"/><circle cx="1010" cy="150" r="40" fill="#f5d9a6" opacity=".92"/></svg><svg class="mt" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path fill="#143441" d="M1000 1080V760L1260 520 1400 430 1520 330 1640 220 1760 110 1830 130 1880 215 1920 200V1080Z"/>
+<path fill="#1d4757" d="M1760 110 1830 130 1880 215 1850 205 1800 142 1715 262 1676 250Z"/>
+<path fill="#18404f" d="M1520 330 1640 220 1676 250 1600 300 1560 345Z"/>
+<path fill="#0f2b36" d="M0 1080V930L375 765 435 858 710 765 775 825 830 700 1075 745 1500 862 1920 780V1080Z"/>
+<path fill="#1d4757" d="M0 930 375 765 405 810 432 852 0 1030Z"/>
+<path fill="#18404f" d="M435 858 710 765 700 790 470 868Z"/>
+<path fill="#1d4757" d="M775 825 830 700 850 740 800 838Z"/>
+<path fill="#1d4757" d="M380 1080 660 965 722 1080Z"/>
+<path fill="#1d4757" d="M1165 1080 1400 862 1448 922 1360 1080Z"/>
+<path fill="#18404f" d="M1500 862 1920 780V830L1560 900Z"/>
+</svg></div>
+</div>
+
 
 <!-- LIVING BACKGROUND -->
 <div class="ambient">
@@ -1695,6 +1760,27 @@ productForm.addEventListener('submit', e=>{
 /* ─── INIT ─── */
 renderBasket();
 updateBasketCount();
+
+/* ─── DAY → NIGHT ON SCROLL (landscape stays fixed, theme switches) ─── */
+(function(){
+    const meta = document.getElementById('themeColorMeta');
+    let night = false, ticking = false;
+    function update(){
+        ticking = false;
+        const onHome = homePage.style.display !== 'none';
+        document.body.classList.toggle('inner', !onHome);
+        const y = window.scrollY, vh = window.innerHeight;
+        if(!onHome) night = false;
+        else if(!night && y > vh*0.28) night = true;
+        else if(night && y < vh*0.16) night = false;
+        document.body.classList.toggle('night', night);
+        if(meta) meta.setAttribute('content', night ? '#0d1822' : '#f3ebe0');
+    }
+    window.addEventListener('scroll', ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
+    window.addEventListener('resize', update);
+    new MutationObserver(update).observe(homePage, {attributes:true, attributeFilter:['style']});
+    update();
+})();
 
 </script>
 </body>
